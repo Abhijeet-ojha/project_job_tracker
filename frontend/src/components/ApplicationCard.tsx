@@ -100,7 +100,7 @@ const ApplicationCard = ({
           <motion.div
             ref={provided.innerRef}
             {...provided.draggableProps}
-            {...provided.dragHandleProps}
+            {...(() => { const { onDragStart: _d, ...rest } = provided.dragHandleProps ?? {}; return rest; })()}
             // Track hover in state so child variants can key off it
             onHoverStart={() => setHovered(true)}
             onHoverEnd={() => setHovered(false)}
