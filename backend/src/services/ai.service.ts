@@ -2,7 +2,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { z } from 'zod';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
-const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash-preview-04-17' });
+const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
 console.log('Gemini key exists:', !!process.env.GEMINI_API_KEY);
 
