@@ -79,7 +79,7 @@ export const updateApplication = async (req: Request, res: Response): Promise<vo
     const application = await Application.findOneAndUpdate(
       { _id: req.params.id, userId },
       { $set: req.body },
-      { new: true, runValidators: true }
+      { returnDocument: 'after', runValidators: true }
     );
 
     if (!application) {
