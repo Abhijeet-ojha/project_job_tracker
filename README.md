@@ -1,5 +1,10 @@
 # Job Tracker Application
 
+🔗 **Live App:** [https://project-job-tracker.vercel.app](https://project-job-tracker.vercel.app)
+
+> ⚠️ **Note:** The backend is hosted on Render's free tier. The first request after a period of inactivity may take **up to 2 minutes** to respond while the server spins up. Please be patient on first load.
+
+
 ## How to Run the Project
 
 1. **Prerequisites:** Ensure you have Node.js and MongoDB installed or a Mongo database available.
