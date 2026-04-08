@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 
 export function useDarkMode() {
   const [isDark, setIsDark] = useState<boolean>(() => {
-    // Respect stored preference, then system preference
+    // Restore saved preference; default to light for first-time visitors
     const stored = localStorage.getItem('theme');
     if (stored) return stored === 'dark';
-    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    return false; // always start in light mode
   });
 
   useEffect(() => {

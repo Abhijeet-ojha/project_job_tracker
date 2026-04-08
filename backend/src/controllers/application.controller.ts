@@ -125,6 +125,9 @@ export const parseApplication = async (req: Request, res: Response): Promise<voi
       return;
     }
 
+    console.log('Gemini key exists:', !!process.env.GEMINI_API_KEY);
+    console.log('JD text:', jobDescriptionText?.slice(0, 100));
+
     // Step 1: Parse the JD into structured fields
     const parsed = await parseJobDescription(jobDescriptionText);
 
@@ -140,7 +143,7 @@ export const parseApplication = async (req: Request, res: Response): Promise<voi
       resumeSuggestions,
     });
   } catch (error) {
-    console.error('parseApplication error:', error);
+    console.error('AI Parse Error:', error);
     res.status(500).json({ message: 'AI parsing failed. Please try again.' });
   }
 };
