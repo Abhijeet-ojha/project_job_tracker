@@ -1,0 +1,7 @@
+src/controllers/auth.controller.ts(46,45): error TS2339: Property 'errors' does not exist on type 'ZodError<unknown>'.
+src/models/User.ts(19,44): error TS2349: This expression is not callable.
+  Type 'SaveOptions' has no call signatures.
+src/models/User.ts(23,5): error TS2349: This expression is not callable.
+  Type 'SaveOptions' has no call signatures.
+src/models/User.ts(25,5): error TS2349: This expression is not callable.
+  Type 'SaveOptions' has no call signatures.
