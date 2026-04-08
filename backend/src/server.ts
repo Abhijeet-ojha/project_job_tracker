@@ -11,17 +11,20 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // ─── CORS ─────────────────────────────────────────────────────────────────────
-// Supports comma-separated list of allowed origins (e.g. local + production)
-const rawOrigins = process.env.CLIENT_URL || 'http://localhost:5173';
-const allowedOrigins = rawOrigins.split(',').map((o) => o.trim());
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://project-job-tracker-fblqomljy.vercel.app",
+];
+
+console.log("Allowed Origins:", allowedOrigins);
 
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow server-to-server (no origin) and listed origins
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
+        console.log("Blocked Origin:", origin);
         callback(new Error(`CORS: origin ${origin} not allowed`));
       }
     },
