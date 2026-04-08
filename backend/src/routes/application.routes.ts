@@ -13,13 +13,14 @@ const router = Router();
 // All routes protected by JWT middleware
 router.use(protect);
 
+// AI parse route — MUST be before /:id routes to avoid Express matching
+// the string "parse" as a MongoDB ObjectId parameter
+router.post('/parse', parseApplication);
+
 // CRUD routes
 router.get('/', getApplications);
 router.post('/', createApplication);
 router.put('/:id', updateApplication);
 router.delete('/:id', deleteApplication);
-
-// AI parse route — must be before /:id to avoid conflict
-router.post('/parse', parseApplication);
 
 export default router;
