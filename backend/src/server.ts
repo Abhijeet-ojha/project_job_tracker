@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 5000;
 // ─── CORS ─────────────────────────────────────────────────────────────────────
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://project-job-tracker-fblqomljy.vercel.app",
+  "https://project-job-tracker.vercel.app",
 ];
 
 console.log("Allowed Origins:", allowedOrigins);
