@@ -1,5 +1,6 @@
 import { useState, useCallback, useMemo } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useAuth } from "@/context/AuthContext";
 import Header from "@/components/Header";
 import KanbanBoard from "@/components/KanbanBoard";
 import KanbanSkeleton from "@/components/KanbanSkeleton";
@@ -43,6 +44,7 @@ function toUIApplication(doc: any): Application {
 
 const Index = () => {
   const queryClient = useQueryClient();
+  const { token } = useAuth();
   const [modalOpen, setModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<ColumnId | "all">("all");
@@ -50,11 +52,12 @@ const Index = () => {
 
   // ─── Fetch applications ─────────────────────────────────────────────────────
   const { data: applications = [], isLoading } = useQuery<Application[]>({
-    queryKey: ["applications"],
+    queryKey: ["applications", token],   // ← scoped per user token
     queryFn: async () => {
       const { data } = await getApplications();
       return (data as any[]).map(toUIApplication);
     },
+    enabled: !!token,  // don't fetch if not logged in
   });
 
   // ─── Create application ──────────────────────────────────────────────────────
