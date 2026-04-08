@@ -65,7 +65,7 @@ const Index = () => {
     mutationFn: (payload: Parameters<typeof createApplication>[0]) =>
       createApplication(payload),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["applications"] });
+      queryClient.invalidateQueries({ queryKey: ["applications", token] });
       toast.success("Application added!");
     },
     onError: () => toast.error("Failed to add application."),
@@ -76,7 +76,7 @@ const Index = () => {
     mutationFn: ({ id, status }: { id: string; status: string }) =>
       updateApplication(id, { status }),
     onError: () => {
-      queryClient.invalidateQueries({ queryKey: ["applications"] });
+      queryClient.invalidateQueries({ queryKey: ["applications", token] });
       toast.error("Failed to move card. Please try again.");
     },
   });
@@ -86,13 +86,13 @@ const Index = () => {
     mutationFn: (id: string) => deleteApplication(id),
     onMutate: (id) => setDeletingId(id),
     onSuccess: (_, id) => {
-      queryClient.setQueryData<Application[]>(["applications"], (prev) =>
+      queryClient.setQueryData<Application[]>(["applications", token], (prev) =>
         prev ? prev.filter((a) => a.id !== id) : []
       );
       toast.success("Application deleted.");
     },
     onError: () => {
-      queryClient.invalidateQueries({ queryKey: ["applications"] });
+      queryClient.invalidateQueries({ queryKey: ["applications", token] });
       toast.error("Failed to delete application.");
     },
     onSettled: () => setDeletingId(null),
@@ -138,7 +138,8 @@ const Index = () => {
 
   const handleMove = useCallback(
     (id: string, destination: ColumnId, _newIndex: number) => {
-      queryClient.setQueryData<Application[]>(["applications"], (prev) => {
+      // Optimistic update — moves the card instantly in the UI
+      queryClient.setQueryData<Application[]>(["applications", token], (prev) => {
         if (!prev) return prev;
         return prev.map((a) =>
           a.id === id ? { ...a, columnId: destination } : a
@@ -146,7 +147,7 @@ const Index = () => {
       });
       updateMutation.mutate({ id, status: columnIdToStatus(destination) });
     },
-    [queryClient, updateMutation]
+    [queryClient, token, updateMutation]
   );
 
   const handleClearFilters = useCallback(() => {
